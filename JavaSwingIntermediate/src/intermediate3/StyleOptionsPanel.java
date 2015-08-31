@@ -12,7 +12,11 @@ import java.awt.event.*;
 
 public class StyleOptionsPanel extends JPanel
 {
-   private JLabel saying;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private JLabel saying;
    private JCheckBox bold, italic;
 
    //-----------------------------------------------------------------

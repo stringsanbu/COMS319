@@ -3,8 +3,11 @@
  */
 
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
+@SuppressWarnings("unused")
 public class HelloWorldSwing {
 
+	
+	
 }

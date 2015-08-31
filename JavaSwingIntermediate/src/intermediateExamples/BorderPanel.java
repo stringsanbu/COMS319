@@ -10,6 +10,7 @@ package intermediateExamples;
 import java.awt.*;
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class BorderPanel extends JPanel
 {
    //-----------------------------------------------------------------
