@@ -56,7 +56,7 @@ public class HelloWorldSwing2 extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Hello World!");
-		lblNewLabel.setBounds(196, 98, 89, 16);
+		lblNewLabel.setBounds(97, 60, 232, 89);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblText = new JLabel("Text: ");
@@ -71,7 +71,7 @@ public class HelloWorldSwing2 extends JFrame {
 			}
 		});
 		txtHelloWorld.setText("Hello World!");
-		txtHelloWorld.setBounds(54, 6, 130, 26);
+		txtHelloWorld.setBounds(41, 6, 130, 26);
 		contentPane.add(txtHelloWorld);
 		txtHelloWorld.setColumns(10);
 		
@@ -108,7 +108,7 @@ public class HelloWorldSwing2 extends JFrame {
 		});
 		rdbtnNewRadioButton.setSelected(true);
 		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(6, 56, 141, 23);
+		rdbtnNewRadioButton.setBounds(6, 31, 141, 23);
 		contentPane.add(rdbtnNewRadioButton);
 		
 		JRadioButton rdbtnBold = new JRadioButton("Bold");
@@ -119,7 +119,7 @@ public class HelloWorldSwing2 extends JFrame {
 			}
 		});
 		buttonGroup.add(rdbtnBold);
-		rdbtnBold.setBounds(6, 91, 141, 23);
+		rdbtnBold.setBounds(6, 66, 141, 23);
 		contentPane.add(rdbtnBold);
 		
 		JRadioButton rdbtnItalic = new JRadioButton("Italic");
@@ -130,7 +130,7 @@ public class HelloWorldSwing2 extends JFrame {
 			}
 		});
 		buttonGroup.add(rdbtnItalic);
-		rdbtnItalic.setBounds(6, 126, 141, 23);
+		rdbtnItalic.setBounds(6, 101, 141, 23);
 		contentPane.add(rdbtnItalic);
 		
 		JRadioButton rdbtnBoldItalic = new JRadioButton("Bold Italic");
@@ -141,7 +141,7 @@ public class HelloWorldSwing2 extends JFrame {
 			}
 		});
 		buttonGroup.add(rdbtnBoldItalic);
-		rdbtnBoldItalic.setBounds(6, 161, 141, 23);
+		rdbtnBoldItalic.setBounds(6, 136, 141, 23);
 		contentPane.add(rdbtnBoldItalic);
 		
 		JButton btnShow = new JButton("Show");
@@ -154,7 +154,7 @@ public class HelloWorldSwing2 extends JFrame {
 					lblNewLabel.setForeground(Color.black);
 			}
 		});
-		btnShow.setBounds(54, 222, 117, 29);
+		btnShow.setBounds(6, 167, 117, 29);
 		contentPane.add(btnShow);
 		
 		JButton btnExit = new JButton("Exit");
@@ -163,7 +163,7 @@ public class HelloWorldSwing2 extends JFrame {
 				dispose();
 			}
 		});
-		btnExit.setBounds(284, 222, 117, 29);
+		btnExit.setBounds(212, 161, 117, 29);
 		contentPane.add(btnExit);
 		
 
