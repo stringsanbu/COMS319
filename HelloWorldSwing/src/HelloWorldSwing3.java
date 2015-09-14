@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.JTextComponent;
 
@@ -29,8 +30,6 @@ import javax.swing.text.JTextComponent;
 public class HelloWorldSwing3 {
 	
 public static JFrame helloFrame;	
-public static JLabel j;
-public static JTextField textbox;
 public static JTextField clearbox;
 public static JCheckBox checkbox;
 public static JTextField textField;
@@ -39,6 +38,9 @@ public static JTextField txtHelloWorld;
 public final static ButtonGroup buttonGroup = new ButtonGroup();
 public static Boolean clearFlag;
 public static int numSeconds;
+public static JCheckBox chckbxClearAfter;
+public static JLabel lblNewLabel;
+
 public static void main(String[] args) {
 		
 		// TODO: At least on mac, the grid moves and resizes when typing. This needs to NOT happen to be a good program.
@@ -50,14 +52,14 @@ public static void main(String[] args) {
 	    helloFrame.setVisible(true);
 	    // Some dimension work added to try to keep UI from moving (at least on Mac)
 
-		while(helloFrame.isActive())
-	    {
-	    	// Some dimension work added to try to keep UI from moving (at least on Mac)
-	    	j.setText(textbox.getText());
-		    j.setMaximumSize(textbox.getSize());
-	    	j.setPreferredSize(textbox.getSize());
-	    	
-	    }
+//		while(helloFrame.isActive())
+//	    {
+//	    	// Some dimension work added to try to keep UI from moving (at least on Mac)
+//	    	j.setText(textbox.getText());
+//		    j.setMaximumSize(textbox.getSize());
+//	    	j.setPreferredSize(textbox.getSize());
+//	    	
+//	    }
 	    
 	    
 }
@@ -68,7 +70,7 @@ static JPanel createContainers() {
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	contentPane.setLayout(null);
 	
-	JLabel lblNewLabel = new JLabel("Hello World!");
+	lblNewLabel = new JLabel("Hello World!");
 	lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 13));
 	lblNewLabel.setBounds(97, 60, 232, 89);
 	contentPane.add(lblNewLabel);
@@ -180,7 +182,7 @@ static JPanel createContainers() {
 	btnExit.setBounds(212, 167, 117, 29);
 	contentPane.add(btnExit);
 	
-	JCheckBox chckbxClearAfter = new JCheckBox("Clear After:");
+	chckbxClearAfter = new JCheckBox("Clear After:");
 	chckbxClearAfter.setFont(new Font("Arial", Font.PLAIN, 10));
 	chckbxClearAfter.setBounds(236, 7, 84, 23);
 	contentPane.add(chckbxClearAfter);
@@ -197,9 +199,8 @@ static JPanel createContainers() {
 	
 	chckbxClearAfter.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			JCheckBox box = (JCheckBox) e.getSource();
-			clearFlag = box.isSelected();
-			timerHelperfunction();
+			clearFlag = chckbxClearAfter.isSelected();
+			timerHelperfunction(this);
 
 		}
 	});
@@ -217,7 +218,7 @@ static JPanel createContainers() {
 			}
 			
 			try{
-				numSeconds = Integer.parseInt(str);
+				numSeconds = Integer.parseInt(str);//partially verifies so that there is no error
 			}
 			catch(Exception exc){
 				JOptionPane.showMessageDialog(helloFrame, exc.toString());
@@ -234,26 +235,37 @@ static JPanel createContainers() {
 			}
 			
 			// Ok, so the input seems valid, we should call into a helper function here to set/unset the timer
-			timerHelperfunction();
+			timerHelperfunction(this);
 			
 		}
 
 
 	});
 	
-	
-	// TODO: Finish handling timer
 
 	return contentPane;
 	
 }
 
-private static void timerHelperfunction() {
+private static void timerHelperfunction(ActionListener actionListener) {
 	// TODO Use numSeconds and the clearFlag to determine what to do
 	// If clearFlag is open, set the timer to clear
 	// If it is off, stop the current timer and set it to null.
 	// The timer should also fire a function that clears the timer box and the checkbox
-	
-}
+	Timer timer=new Timer(numSeconds*1000, actionListener);
+	timer.start();
 
+	if(clearFlag)
+	{
+		lblNewLabel.setText("");
+		textField.setText("");
+		timer.stop();
+	}
+	else{
+		lblNewLabel.setText(txtHelloWorld.getText());
+		timer.stop();
+	}
+	
+
+}
 }
