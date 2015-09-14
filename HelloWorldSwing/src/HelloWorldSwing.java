@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+<<<<<<< HEAD
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
@@ -19,7 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
 
+=======
+import javax.swing.*;
+>>>>>>> origin/master
 
+@SuppressWarnings("unused")
 public class HelloWorldSwing {
 	
 public static JFrame helloFrame;	
@@ -189,4 +194,6 @@ static JPanel createContainers() {
 	
 }
 
+	
+	
 }
