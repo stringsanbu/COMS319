@@ -93,19 +93,37 @@ public class DataModel extends javax.swing.AbstractListModel{
 		String removeString=x.get(index);
 		x.remove(index);
 		listmodel.removeElementAt(index);
-//		File f=new File("companies.txt");
-//		try {
-//			FileWriter outfile=new FileWriter(f);
-//			BufferedReader scannOut=new BufferedReader(new FileReader(f));
-//			BufferedWriter out=new BufferedWriter(outfile);
-//			
-//			out.close();
-//			outfile.close();
-//			scannOut.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		
+		try {
+            File f = new File("companies.txt");
+            String line = null;//the line the reader will use
+            //Construct a new file
+            File tempFile = new File(f.getAbsolutePath() + ".tmp");
+           
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            
+            //Read from the original file and write to the new
+            //unless content matches data to be removed.
+            while ((line = br.readLine()) != null) {
+                if (!line.trim().equals(removeString)) {
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+            pw.close();
+            br.close();
+ 
+
+           f.delete();//delete file
+           tempFile.renameTo(f);// rename to temp file
+		}
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
 	}
 		
 	
