@@ -1,5 +1,7 @@
 .metadata/
 
+.recommenders/
+
 *.index
 
 *.snap
@@ -35,3 +37,9 @@
 *.xml
 
 *.mark
+
+*.swp
+
+HelloWorldSwing/bin/HelloWorldSwing$1.class
+
+*.class

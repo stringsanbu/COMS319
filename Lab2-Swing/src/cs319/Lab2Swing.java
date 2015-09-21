@@ -76,6 +76,7 @@ public class Lab2Swing extends JFrame {
 		DataModel d = new DataModel();
 		JScrollPane scrollPane = new JScrollPane(d.companies);
 		d.companies.setSelectionBackground(Color.YELLOW);
+		d.companies.setSelectionForeground(Color.BLACK);
 		scrollPane.setBounds(0, 0, 425, 197);
 		JPanel List = new JPanel();
 		tabbedPane.addTab("List", null, List, null);
@@ -118,9 +119,8 @@ public class Lab2Swing extends JFrame {
 		tree.setRootVisible(true);
 		tree.setEditable(true);
 		
-		JScrollPane scroll = new JScrollPane(tree);
+		JScrollPane scroll = new JScrollPane(tree, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setBounds(0, 0, 424, 195);
-		
 		JPanel Tree = new JPanel();
 		tabbedPane.addTab("Tree", null, Tree, null);
 		Tree.setLayout(null);
