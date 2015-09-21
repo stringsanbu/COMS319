@@ -36,7 +36,7 @@ import java.io.FileNotFoundException;
 
 import javax.swing.JTree;
 
-public class Lab2Swing extends JFrame {
+public class Lab3Swing extends JFrame {
 
 	@SuppressWarnings("rawtypes")
 	private JPanel contentPane;
@@ -48,7 +48,7 @@ public class Lab2Swing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Lab2Swing frame = new Lab2Swing();
+					Lab3Swing frame = new Lab3Swing();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,7 +60,7 @@ public class Lab2Swing extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Lab2Swing() {
+	public Lab3Swing() {
 		setTitle("JTree Example");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -135,6 +135,9 @@ public class Lab2Swing extends JFrame {
 				removeTreeElement.setBounds(223, 201, 89, 23);
 				Tree.add(removeTreeElement);
 				
+				// add listeners, we used similar code that was used in Dr. Mitra's TreeFrame example - with a few minor adjustments to fit our code
+
+
 				addTreeElement.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						//Identify the node that has been selected
