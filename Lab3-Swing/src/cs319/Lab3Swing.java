@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JDesktopPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -33,6 +36,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.util.Vector;
 
 import javax.swing.JTree;
 
@@ -63,21 +67,21 @@ public class Lab3Swing extends JFrame {
 	public Lab3Swing() {
 		setTitle("JTree Example");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 480, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
-		tabbedPane.setBounds(3, 3, 431, 258);
+		tabbedPane.setBounds(3, 3, 475, 270);
 		contentPane.add(tabbedPane);
 		
 		DataModel d = new DataModel();
 		JScrollPane scrollPane = new JScrollPane(d.companies);
 		d.companies.setSelectionBackground(Color.YELLOW);
 		d.companies.setSelectionForeground(Color.BLACK);
-		scrollPane.setBounds(0, 0, 425, 197);
+		scrollPane.setBounds(0, 0, 470, 197);
 		JPanel List = new JPanel();
 		tabbedPane.addTab("List", null, List, null);
 		List.setLayout(null);
@@ -174,10 +178,29 @@ public class Lab3Swing extends JFrame {
 						defaultTree.removeNodeFromParent(selected);
 					}
 				});
+				/*String[] columnNames = {"First Name","Last Name","Age","Gender","Vegetarian"};
+				Object dataValues[][] = {
+						 {"Kathy", "Smith", 25, 'F', false},
+						 {"John", "Doe", 43, 'M', false},
+						 {"Sue", "Black", 61, 'F', true},
+						 {"Jane", "White", 17, 'F', true},
+						 {"Joe", "Brown", 32, 'M', false},
+						 {"Abby", "Dawn", 41, 'F', false},
+						 {"Mila", "Manson", 26, 'F', true},
+						 {"Jack", "Schmitt", 32, 'M', true}
+						};*/
+		DataModel2 tableObject = new DataModel2();
 		
-				
-				
+		
+		
 		JPanel Table = new JPanel();
+		JScrollPane scrollTree = new JScrollPane(tableObject.people);
+		scrollTree.setBounds(0, 0, 100, 10);
+		Table.add(scrollTree);
+		
+		
+
+		
 		tabbedPane.addTab("Table", null, Table, null);
 	}
 
