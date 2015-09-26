@@ -71,13 +71,13 @@ public class Lab3Swing extends JFrame {
 	public Lab3Swing() {
 		
 		//Opening socket for use to get JList
-		Socket socket = new Socket("localhost", 12345);
-	    Thread.sleep(1000);
-		
+//		Socket socket = new Socket("localhost", 12345);
+//	    Thread.sleep(1000);
+//		
 	    // Here's the vars we'll use with the socket
-	    PrintWriter out = new PrintWriter(socket.getOutputStream());
-		Scanner in = new Scanner(socket.getInputStream());
-		
+//	    PrintWriter out = new PrintWriter(socket.getOutputStream());
+//		Scanner in = new Scanner(socket.getInputStream());
+//		
 		
 		setTitle("JTree Example");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,8 +93,7 @@ public class Lab3Swing extends JFrame {
 			
 		DefaultListModel listmodel =new DefaultListModel();
 		JList<String> list = new JList<String>(listmodel);
-		
-		list.add
+		final DataModel d = new DataModel();
 		JScrollPane scrollPane = new JScrollPane(d.companies);
 		d.companies.setSelectionBackground(Color.YELLOW);
 		d.companies.setSelectionForeground(Color.BLACK);
@@ -105,7 +104,7 @@ public class Lab3Swing extends JFrame {
 
 		List.add(scrollPane);
 		
-		JButton add = new JButton("Add");
+		final JButton add = new JButton("Add");
 		add.setBounds(91, 201, 89, 23);
 		List.add(add);
 		
@@ -131,9 +130,9 @@ public class Lab3Swing extends JFrame {
 			}
 		});
 			
-		DefaultTreeModel defaultTree=createTModel();
+		final DefaultTreeModel defaultTree=createTModel();
 					
-		JTree tree = new JTree(defaultTree);
+		final JTree tree = new JTree(defaultTree);
 		tree.setForeground(Color.GRAY);
 		tree.setBounds(0, 0, 425, 197);
 		tree.setShowsRootHandles(true);
