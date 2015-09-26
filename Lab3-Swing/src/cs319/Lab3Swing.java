@@ -36,9 +36,13 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.JTree;
+import javax.swing.ListModel;
 
 public class Lab3Swing extends JFrame {
 
@@ -65,6 +69,16 @@ public class Lab3Swing extends JFrame {
 	 * Create the frame.
 	 */
 	public Lab3Swing() {
+		
+		//Opening socket for use to get JList
+		Socket socket = new Socket("localhost", 12345);
+	    Thread.sleep(1000);
+		
+	    // Here's the vars we'll use with the socket
+	    PrintWriter out = new PrintWriter(socket.getOutputStream());
+		Scanner in = new Scanner(socket.getInputStream());
+		
+		
 		setTitle("JTree Example");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 300);
@@ -76,8 +90,11 @@ public class Lab3Swing extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
 		tabbedPane.setBounds(3, 3, 475, 270);
 		contentPane.add(tabbedPane);
+			
+		DefaultListModel listmodel =new DefaultListModel();
+		JList<String> list = new JList<String>(listmodel);
 		
-		DataModel d = new DataModel();
+		list.add
 		JScrollPane scrollPane = new JScrollPane(d.companies);
 		d.companies.setSelectionBackground(Color.YELLOW);
 		d.companies.setSelectionForeground(Color.BLACK);
@@ -197,9 +214,6 @@ public class Lab3Swing extends JFrame {
 		JScrollPane scrollTree = new JScrollPane(tableObject.people);
 		scrollTree.setBounds(0, 0, 100, 10);
 		Table.add(scrollTree);
-		
-		
-
 		
 		tabbedPane.addTab("Table", null, Table, null);
 	}
