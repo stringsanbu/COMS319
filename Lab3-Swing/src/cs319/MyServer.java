@@ -11,17 +11,23 @@ package cs319;
 //
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class MyServer {
-
+	
+	/*
+	 * The Datamodel that will hold our list. Makes life easier instead of having to copy and paste stuff to make it work here.
+	 */
+	private static DataModel list;
+	
 	public static void main(String[] args) throws IOException {
 
 		ServerSocket serverSocket = null;
 		int clientNum = 0; // keeps track of how many clients were created
-
+		list = new DataModel();			
 		// 1. CREATE A NEW SERVERSOCKET
 		try {
 			serverSocket = new ServerSocket(12345); // provide MYSERVICE at port
@@ -45,7 +51,7 @@ public class MyServer {
 				// 2.2 SPAWN A THREAD TO HANDLE CLIENT REQUEST
 				System.out.println("Server got connected to a client"
 						+ ++clientNum);
-				Thread t = new Thread(new ClientHandler(clientSocket, clientNum));
+				Thread t = new Thread(new ClientHandler(clientSocket, clientNum, list));
 				t.start();
 
 			} catch (IOException e) {
@@ -66,10 +72,12 @@ public class MyServer {
 class ClientHandler implements Runnable {
 	Socket s; // this is socket on the server side that connects to the CLIENT
 	int num; // keeps track of its number just for identifying purposes
-
-	ClientHandler(Socket s, int n) {
+	DataModel list;
+	
+	ClientHandler(Socket s, int n, DataModel list) {
 		this.s = s;
 		num = n;
+		this.list = list;
 	}
 
 	// This is the client handling code
@@ -78,12 +86,29 @@ class ClientHandler implements Runnable {
 		Scanner in;
 		
 		try {
+			System.out.println("Starting to work with Client");
 			// 1. USE THE SOCKET TO READ WHAT THE CLIENT IS SENDING
 			in = new Scanner(s.getInputStream()); 
 			String clientMessage = in.nextLine();
-			
-			// 2. PRINT WHAT THE CLIENT SENT
-			System.out.println("Message from Client" + num + ":"  + clientMessage);
+			System.out.println("Message: "+clientMessage);
+			String command = clientMessage.substring(0, clientMessage.indexOf("^"));
+			String rest = clientMessage.substring(clientMessage.indexOf("^")+1);
+			// 2. Time to figure out 
+			switch (command)
+			{
+			case "list":
+				sendList();
+				break;
+			case "add": 
+				list.addCompany(rest);
+				break;
+			case "remove":
+				list.remove(Integer.parseInt(rest));
+				break;
+			default:
+				System.out.println("Default. Split didn't work");
+				return;
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -93,11 +118,22 @@ class ClientHandler implements Runnable {
 	} // end of method run()
 
 	void printSocketInfo(Socket s) {
-		System.out.print("Socket on Server " + Thread.currentThread() + " ");
-		System.out.print("Server socket Local Address: " + s.getLocalAddress()
-				+ ":" + s.getLocalPort());
-		System.out.println("  Server socket Remote Address: "
-				+ s.getRemoteSocketAddress());
+		//System.out.print("Socket on Server " + Thread.currentThread() + " ");
+		//System.out.print("Server socket Local Address: " + s.getLocalAddress()
+	//			+ ":" + s.getLocalPort());
+		//System.out.println("  Server socket Remote Address: "
+			//	+ s.getRemoteSocketAddress());
 	} // end of printSocketInfo
+	
+	private void sendList() throws IOException{
+		System.out.println("Sending List");
+		PrintWriter writer = new PrintWriter(s.getOutputStream());
+		for(String s : list.x){
+			writer.println(s);
+		}
+		writer.println("endTransmission");
+		writer.flush();
+		writer.close();
+	}
 	
 } // end of class ClientHandler

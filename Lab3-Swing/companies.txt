@@ -20,3 +20,5 @@ OperaNetmore net
 null
 he
 Dog
+^0
+herof

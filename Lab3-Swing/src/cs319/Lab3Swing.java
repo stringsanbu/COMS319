@@ -1,52 +1,37 @@
 package cs319;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JDesktopPane;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import javax.swing.JLayeredPane;
 import javax.swing.JButton;
 
-import java.awt.FlowLayout;
-
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.Vector;
-
 import javax.swing.JTree;
-import javax.swing.ListModel;
 
+@SuppressWarnings("serial")
 public class Lab3Swing extends JFrame {
 
-	@SuppressWarnings("rawtypes")
 	private JPanel contentPane;
 
 	/**
@@ -67,17 +52,11 @@ public class Lab3Swing extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public Lab3Swing() {
+	public Lab3Swing() throws Exception {
 		
-		//Opening socket for use to get JList
-//		Socket socket = new Socket("localhost", 12345);
-//	    Thread.sleep(1000);
-//		
-	    // Here's the vars we'll use with the socket
-//	    PrintWriter out = new PrintWriter(socket.getOutputStream());
-//		Scanner in = new Scanner(socket.getInputStream());
-//		
+		
 		
 		setTitle("JTree Example");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,12 +70,19 @@ public class Lab3Swing extends JFrame {
 		tabbedPane.setBounds(3, 3, 475, 270);
 		contentPane.add(tabbedPane);
 			
-		DefaultListModel listmodel =new DefaultListModel();
-		JList<String> list = new JList<String>(listmodel);
-		final DataModel d = new DataModel();
-		JScrollPane scrollPane = new JScrollPane(d.companies);
-		d.companies.setSelectionBackground(Color.YELLOW);
-		d.companies.setSelectionForeground(Color.BLACK);
+		ArrayList<String> listObjects = getListObjects();
+		JList<String> list = new JList<String>();
+		DefaultListModel<String> listmodel = new DefaultListModel<String>();
+		list.setModel(listmodel);
+		
+		for(String s: listObjects){
+			listmodel.addElement(s);
+		}
+		
+
+		JScrollPane scrollPane = new JScrollPane(list);
+		list.setSelectionBackground(Color.YELLOW);
+		list.setSelectionForeground(Color.BLACK);
 		scrollPane.setBounds(0, 0, 470, 197);
 		JPanel List = new JPanel();
 		tabbedPane.addTab("List", null, List, null);
@@ -111,10 +97,15 @@ public class Lab3Swing extends JFrame {
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String s = JOptionPane.showInputDialog( add, "What is new company?", "Enter new company name", JOptionPane.QUESTION_MESSAGE);
-				
-					d.addCompany(s);
+					listmodel.addElement(s);
+					try {
+						sendAdd(s);
+					} catch (InterruptedException | IOException e1) {
+						e1.printStackTrace();
+					}
 				
 			}
+
 		});
 		
 		JButton remove = new JButton("Remove");
@@ -123,11 +114,19 @@ public class Lab3Swing extends JFrame {
 		
 		remove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index=d.companies.getSelectedIndex();
+				int index=list.getSelectedIndex();
 				//if statement garuntees a list item was selected
-				if (index != -1) 
-				   d.remove(index);
+				if (index != -1) {
+					
+					listmodel.remove(index);
+					try {
+					sendRemove(index);
+				} catch (InterruptedException | IOException e1) {
+					e1.printStackTrace();
+				}
+				}
 			}
+			
 		});
 			
 		final DefaultTreeModel defaultTree=createTModel();
@@ -194,17 +193,7 @@ public class Lab3Swing extends JFrame {
 						defaultTree.removeNodeFromParent(selected);
 					}
 				});
-				/*String[] columnNames = {"First Name","Last Name","Age","Gender","Vegetarian"};
-				Object dataValues[][] = {
-						 {"Kathy", "Smith", 25, 'F', false},
-						 {"John", "Doe", 43, 'M', false},
-						 {"Sue", "Black", 61, 'F', true},
-						 {"Jane", "White", 17, 'F', true},
-						 {"Joe", "Brown", 32, 'M', false},
-						 {"Abby", "Dawn", 41, 'F', false},
-						 {"Mila", "Manson", 26, 'F', true},
-						 {"Jack", "Schmitt", 32, 'M', true}
-						};*/
+				
 		DataModel2 tableObject = new DataModel2();
 		
 		
@@ -257,6 +246,59 @@ public class Lab3Swing extends JFrame {
 
 		return treeModel;
 
+	}
+	
+	private ArrayList<String> getListObjects() throws Exception{
+		//Opening socket for use to get JList
+		Socket socket = new Socket("localhost", 12345);
+	    Thread.sleep(1000);
+		
+	    // Here's the vars we'll use with the socket
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+		Scanner in = new Scanner(socket.getInputStream());
+		
+		out.println("list^dontmatter");
+		out.flush();
+		Thread.sleep(1000);
+		String s;
+		ArrayList<String> listObjects = new ArrayList<String>();
+		try {
+			while(!(s = in.nextLine()).contains("endTransmission")){
+				listObjects.add(s);
+			}
+		} catch (NoSuchElementException e) {
+			// TODO: handle exception
+		}
+		
+		socket.close();
+		in.close();
+		out.close();
+		
+		
+		return listObjects;
+		
+		
+	}
+	
+	private void sendAdd(String s) throws InterruptedException, IOException {
+		
+		Socket socket = new Socket("localhost", 12345);
+	    Thread.sleep(1000);
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        out.println("add^"+s);
+        out.flush();
+        socket.close();
+		out.close();
+	}
+	
+	private void sendRemove(int index) throws InterruptedException, UnknownHostException, IOException {
+		Socket socket = new Socket("localhost", 12345);
+	    Thread.sleep(1000);
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        out.println("remove^"+Integer.toString(index));
+        out.flush();
+        socket.close();
+		out.close();
 	}
 
 }

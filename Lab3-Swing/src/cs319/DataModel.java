@@ -21,7 +21,7 @@ public class DataModel extends javax.swing.AbstractListModel{
 	public JList<String> companies= new JList<String>();
 	public ArrayList<String> x=new ArrayList<String>();
 	
-	public DataModel(){
+	public DataModel(){	
 
 		try {
 			File f=new File("companies.txt");

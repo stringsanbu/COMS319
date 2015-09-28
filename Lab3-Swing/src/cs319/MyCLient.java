@@ -18,8 +18,8 @@ public class MyCLient {
 		Socket socket = new Socket("localhost", 4444);
 		printSocketInfo(socket);
 
-    // WAIT A WHILE FOR SERVER TO GET READY TO RECEIVE!
-    Thread.sleep(1000);
+		// WAIT A WHILE FOR SERVER TO GET READY TO RECEIVE!
+		Thread.sleep(1000);
 		
 		// 2. WRITE A MESSAGE TO THE SOCKET TO SEND TO THE SERVER
 		PrintWriter out = new PrintWriter(socket.getOutputStream());
