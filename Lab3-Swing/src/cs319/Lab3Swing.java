@@ -71,8 +71,8 @@ public class Lab3Swing extends JFrame {
 		contentPane.add(tabbedPane);
 			
 		ArrayList<String> listObjects = getListObjects();
-		JList<String> list = new JList<String>();
-		DefaultListModel<String> listmodel = new DefaultListModel<String>();
+		final JList<String> list = new JList<String>();
+		final DefaultListModel<String> listmodel = new DefaultListModel<String>();
 		list.setModel(listmodel);
 		
 		for(String s: listObjects){
