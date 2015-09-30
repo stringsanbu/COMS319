@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Problem2</title>
+</head>
+<body>
+<input style="position: absolute; top:10px; left:5px;" id="startstop" type="button" value="Start" onClick="startstop()" />
+<input style="position: absolute; top:10px; left:55px;" id="left" type="button" value="Turn Left" onClick="turnLeft()"  />
+<input style="position: absolute; top:10px; left:130px;" id="right" type="button" value="Turn Right" onClick="turnRight()" />
+
+
+<canvas id="canvasId" width="1080" height="720" style="border:2px solid #000000; position: absolute; top:50px; left:5px;"></canvas>
+	
+	
+	
+    <script type="text/javascript">
+	var direction="east";
+    var locationX=0;
+	var locationY=360;
+	var drawing=false;
+	
+	function startstop(){
+	
+	if(document.getElementById("startstop").value=="Start"){
+		document.getElementById("startstop").value="Stop";
+		drawing=true;
+		myVar = setInterval(draw, 50)
+
+	}
+	else{
+		document.getElementById("startstop").value="Start";
+		clearInterval(myVar);
+		drawing=false;
+	}
+	return;
+	
+	}
+	//The -3s and +3s are corrections so that the line is continuous
+     function turnLeft(){
+		if(direction=="east"){
+			direction="north";
+			locationX=locationX -2;
+		}
+		else if(direction=="north"){
+			direction="west";
+			locationY=locationY +2;
+		}
+		else if(direction=="west"){
+			direction="south";
+			locationX=locationX +2;
+		}
+		else if(direction=="south"){
+			direction="east";
+			locationY=locationY -2;
+		}
+		return;
+	}
+	//The -3s and +3s are corrections so that the line is continuous
+	function turnRight(){
+		if(direction=="east"){
+			direction="south";
+			locationX=locationX -2;
+		}
+		else if(direction=="south"){
+			direction="west";
+			locationY=locationY -2;
+		}
+		else if(direction=="west"){
+			direction="north";
+			locationX=locationX +2;
+		}
+		else if(direction=="north"){
+			direction="east";
+			locationY=locationY +2;
+		}
+		return;
+	}
+	
+	function draw(){
+	var canvas = document.getElementById("canvasId");
+     var context = canvas.getContext('2d');
+
+      context.beginPath();
+      context.moveTo(locationX, locationY);
+	  context.lineWidth=4;
+	  context.strokeStyle='#ff0000';
+	  
+	  if(direction=="east"){
+	  locationX=locationX+1;
+	  locationY=locationY;
+      context.lineTo(locationX, locationY);
+	  context.stroke();
+	  }
+	  if(direction=="north"){
+	  locationX=locationX;
+	  locationY=locationY-1;
+      context.lineTo(locationX, locationY);
+	  context.stroke();
+	  }
+	  if(direction=="west"){
+	  locationX=locationX-1;
+	  locationY=locationY;
+      context.lineTo(locationX, locationY);
+	  context.stroke();
+	  }
+	  if(direction=="south"){
+	  locationX=locationX;
+	  locationY=locationY+1;
+      context.lineTo(locationX, locationY);
+	  context.stroke();
+	  }
+	  
+		return;
+	}
+    </script>
+
+
+
+</body>
+</html>
+
