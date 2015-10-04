@@ -91,7 +91,7 @@ public class DataListModel extends javax.swing.AbstractListModel {
 			String yearString = Integer.toString(date.getYear());
 			yearString = yearString.substring(yearString.length()-2, yearString.length());
 			yearString = "20"+yearString;
-			
+			 
 			cal.set(java.util.Calendar.DATE, date.getDate());
 			cal.set(java.util.Calendar.YEAR, Integer.parseInt(yearString));
 			cal.set(java.util.Calendar.MONTH, date.getMonth());

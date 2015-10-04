@@ -140,7 +140,7 @@ public class dataPickerStuff {
 		gbc_lblChooseYourCountries.gridx = 2;
 		gbc_lblChooseYourCountries.gridy = 0;
 		jpanel.add(lblChooseYourCountries, gbc_lblChooseYourCountries);
-		
+		 
 		DefaultTableModel tbmodel = new DefaultTableModel();
 		tbmodel.addColumn("Description");
 		tbmodel.addColumn("Country");
