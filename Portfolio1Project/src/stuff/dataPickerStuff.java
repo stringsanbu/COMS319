@@ -10,7 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.plaf.PanelUI;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -31,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class dataPickerStuff {
@@ -53,7 +56,7 @@ public class dataPickerStuff {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the application.
 	 * @throws ParserException 
@@ -138,16 +141,11 @@ public class dataPickerStuff {
 		gbc_lblChooseYourCountries.gridy = 0;
 		jpanel.add(lblChooseYourCountries, gbc_lblChooseYourCountries);
 		
-		table = new JTable();
-		TableColumn nameColumn = new TableColumn();
-		nameColumn.setHeaderValue("Name");
+		DefaultTableModel tbmodel = new DefaultTableModel();
+		tbmodel.addColumn("Description");
+		tbmodel.addColumn("Country");
+		table = new JTable(tbmodel);
 		
-		TableColumn countryColumn = new TableColumn();
-		countryColumn.setHeaderValue("Country");
-		
-		
-		table.getColumnModel().addColumn(nameColumn);
-		table.getColumnModel().addColumn(countryColumn);
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.gridheight = 2;	
 		gbc_table.gridwidth = 2;
@@ -155,14 +153,26 @@ public class dataPickerStuff {
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 2;
-		jpanel.add(table, gbc_table);
+		jpanel.add(new JScrollPane(table), gbc_table);
 		
 		btnGotempButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Date date = datepicker.getDate();
 				int[] selectedCountries = list.countries.getSelectedIndices();
-				ArrayList<String[]> holidays = list.getHolidays(selectedCountries, date);
-					
+				ArrayList<String[]> holidays = null;
+				try {
+					holidays = list.getHolidays(selectedCountries, date);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				for(String[] holiday : holidays){
+					model.addRow(holiday);
+				}
+				
+				
 			}
 		});
 
