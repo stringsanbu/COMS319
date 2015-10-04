@@ -35,6 +35,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class dataPickerStuff {
 
@@ -88,27 +91,12 @@ public class dataPickerStuff {
 		JPanel pane = new JPanel();
 		JPanel jpanel = new JPanel();
 		GridBagLayout gbl_jpanel = new GridBagLayout();
-		gbl_jpanel.columnWidths = new int[]{0, 160, 120, 0};
+		gbl_jpanel.columnWidths = new int[]{0, 0, 160, 120, 0};
 		gbl_jpanel.rowHeights = new int[]{28, 0, 0, 0, 0};
-		gbl_jpanel.columnWeights = new double[]{0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gbl_jpanel.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_jpanel.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_jpanel.rowWeights = new double[]{1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		jpanel.setLayout(gbl_jpanel);
 		frame.getContentPane().add(jpanel);
-		
-		JLabel lblDate = new JLabel("          Date:");
-		GridBagConstraints gbc_lblDate = new GridBagConstraints();
-		gbc_lblDate.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDate.gridx = 0;
-		gbc_lblDate.gridy = 0;
-		jpanel.add(lblDate, gbc_lblDate);
-		
-		final DatePicker  datepicker = new DatePicker(new Date());
-		GridBagConstraints gbc_datepicker = new GridBagConstraints();
-		gbc_datepicker.insets = new Insets(0, 0, 5, 5);
-		gbc_datepicker.anchor = GridBagConstraints.NORTHWEST;
-		gbc_datepicker.gridx = 1;
-		gbc_datepicker.gridy = 0;
-		jpanel.add(datepicker, gbc_datepicker);
 		
 		/*
 		 * Let's add the countries table in a scroll pane.
@@ -117,18 +105,36 @@ public class dataPickerStuff {
 		
 		DataListModel list = new DataListModel();
 		
+		JLabel lblDate = new JLabel("          Date:");
+		GridBagConstraints gbc_lblDate = new GridBagConstraints();
+		gbc_lblDate.insets = new Insets(0, 0, 5, 5);
+		gbc_lblDate.gridx = 1;
+		gbc_lblDate.gridy = 0;
+		jpanel.add(lblDate, gbc_lblDate);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 2;
+		gbc_scrollPane.gridy = 0;
+		jpanel.add(scrollPane, gbc_scrollPane);
+		
+		final DatePicker  datepicker = new DatePicker(new Date());
+		scrollPane.setViewportView(datepicker);
+		
 		JButton btnGotempButton = new JButton("Go (temp button)");
 
 		GridBagConstraints gbc_btnGotempButton = new GridBagConstraints();
 		gbc_btnGotempButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnGotempButton.gridx = 1;
+		gbc_btnGotempButton.gridx = 2;
 		gbc_btnGotempButton.gridy = 1;
 		jpanel.add(btnGotempButton, gbc_btnGotempButton);
 		
 		GridBagConstraints gbc_list = new GridBagConstraints();
 		gbc_list.gridheight = 2;
 		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridx = 2;
+		gbc_list.gridx = 3;
 		gbc_list.gridy = 2;
 		
 		countryListPane.setViewportView(list.countries);
@@ -137,7 +143,7 @@ public class dataPickerStuff {
 		JLabel lblChooseYourCountries = new JLabel("Choose Your Countries:");
 		GridBagConstraints gbc_lblChooseYourCountries = new GridBagConstraints();
 		gbc_lblChooseYourCountries.insets = new Insets(0, 0, 5, 0);
-		gbc_lblChooseYourCountries.gridx = 2;
+		gbc_lblChooseYourCountries.gridx = 3;
 		gbc_lblChooseYourCountries.gridy = 0;
 		jpanel.add(lblChooseYourCountries, gbc_lblChooseYourCountries);
 		 
@@ -148,7 +154,7 @@ public class dataPickerStuff {
 		
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.gridheight = 2;	
-		gbc_table.gridwidth = 2;
+		gbc_table.gridwidth = 3;
 		gbc_table.insets = new Insets(0, 0, 0, 5);
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.gridx = 0;
@@ -178,5 +184,4 @@ public class dataPickerStuff {
 
 		
 	}
-
 }
