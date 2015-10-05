@@ -8,18 +8,11 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.plaf.PanelUI;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import com.michaelbaranov.microba.calendar.CalendarPane;
 import com.michaelbaranov.microba.calendar.DatePicker;
 
 import net.fortuna.ical4j.data.ParserException;
@@ -28,18 +21,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
-public class dataPickerStuff {
+public class HolidayChecker {
 
 	private JFrame frame;
 	private JTable table;
@@ -51,7 +40,7 @@ public class dataPickerStuff {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					dataPickerStuff window = new dataPickerStuff();
+					HolidayChecker window = new HolidayChecker();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,7 +54,7 @@ public class dataPickerStuff {
 	 * @throws ParserException 
 	 * @throws IOException 
 	 */
-	public dataPickerStuff() throws IOException, ParserException {
+	public HolidayChecker() throws IOException, ParserException {
 		initialize();
 	}
 
@@ -88,7 +77,6 @@ public class dataPickerStuff {
 		JDatePickerImpl datePickerImpl = new JDatePickerImpl(datePanel, null);
 		datePickerImpl.setTextEditable(true);
 				
-		JPanel pane = new JPanel();
 		JPanel jpanel = new JPanel();
 		GridBagLayout gbl_jpanel = new GridBagLayout();
 		gbl_jpanel.columnWidths = new int[]{0, 0, 160, 120, 0};
@@ -123,7 +111,7 @@ public class dataPickerStuff {
 		final DatePicker  datepicker = new DatePicker(new Date());
 		scrollPane.setViewportView(datepicker);
 		
-		JButton btnGotempButton = new JButton("Go (temp button)");
+		JButton btnGotempButton = new JButton("Go");
 
 		GridBagConstraints gbc_btnGotempButton = new GridBagConstraints();
 		gbc_btnGotempButton.insets = new Insets(0, 0, 5, 5);
@@ -169,7 +157,6 @@ public class dataPickerStuff {
 				try {
 					holidays = list.getHolidays(selectedCountries, date);
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				

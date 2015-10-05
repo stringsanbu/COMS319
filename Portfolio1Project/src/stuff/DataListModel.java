@@ -2,37 +2,27 @@ package stuff;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.Scanner;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import groovy.ui.Console;
-import groovyjarjarantlr.collections.List;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.filter.Filter;
 import net.fortuna.ical4j.filter.PeriodRule;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
-import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Dur;
 import net.fortuna.ical4j.model.Property;
-import net.fortuna.ical4j.model.component.VEvent;
 
+@SuppressWarnings({ "rawtypes", "serial" })
 public class DataListModel extends javax.swing.AbstractListModel {
 
 	public DefaultListModel listmodel = new DefaultListModel();
@@ -101,15 +91,14 @@ public class DataListModel extends javax.swing.AbstractListModel {
 			cal.clear(java.util.Calendar.SECOND);
 			
 			DateTime dateTime = new DateTime(cal.getTime());
-			String ds = dateTime.toGMTString();
+			dateTime.toGMTString();
 			net.fortuna.ical4j.model.Period period = new net.fortuna.ical4j.model.Period(new DateTime(date.getTime()), new Dur(2, 0, 0, 0));
-			@SuppressWarnings("deprecation")
 			Filter filter = new Filter(new PeriodRule(period));
 			
-			Collection<Object> events = filter.filter(calendar.getComponents(Component.VEVENT));
+			filter.filter(calendar.getComponents(Component.VEVENT));
 		
-			ComponentList list = (ComponentList) filter.filter(calendar.getComponents(Component.VEVENT));
-			ArrayList<Component> components = new ArrayList<Component>();
+			filter.filter(calendar.getComponents(Component.VEVENT));
+			new ArrayList<Component>();
 			for (Iterator i = calendar.getComponents().iterator(); i.hasNext();) {
 			    Component component = (Component) i.next();
 			    System.out.println("Component [" + component.getName() + "]");
@@ -118,7 +107,7 @@ public class DataListModel extends javax.swing.AbstractListModel {
 			        Property property = (Property) j.next();
 			        if(property.getName() == "DtStart" || property.getName() == "DTSTART"){
 			        	DateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
-			            DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			            Date targetDate = originalFormat.parse(property.getValue());
 			            DateTime targetDateTime = new DateTime(targetDate.getTime());			        	
 			        	System.out.println(targetDateTime.toGMTString());
@@ -127,8 +116,7 @@ public class DataListModel extends javax.swing.AbstractListModel {
 			        			&& targetDateTime.getMonth() == dateTime.getMonth() 
 			        			&& targetDateTime.getYear() == dateTime.getYear() )
 			        		{
-			        			@SuppressWarnings("unused")
-								String description = ((Property) component.getProperties("Description").get(0)).getValue();
+			        			String description = ((Property) component.getProperties("Description").get(0)).getValue();
 			        			String location = ((Property) component.getProperties("Location").get(0)).getValue();
 			        			String[] arr = {description, location};
 			        			holidayData.add(arr);
