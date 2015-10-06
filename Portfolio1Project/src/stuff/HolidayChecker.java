@@ -91,7 +91,7 @@ public class HolidayChecker {
 		 */
 		JScrollPane countryListPane = new JScrollPane();
 		
-		DataListModel list = new DataListModel();
+		final DataListModel list = new DataListModel();
 		
 		JLabel lblDate = new JLabel("          Date:");
 		GridBagConstraints gbc_lblDate = new GridBagConstraints();
