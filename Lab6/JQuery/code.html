@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="thisDiv">
+    This is a div that will be changed. Go ahead, click on me and see it!
+</div>
+<div id="explainDiv">
+</div>
+<div id="randomEvents">
+    <ul>
+        <li>We already used click above, let's try other things:</li>
+        <li id="hoverOverMe">Hover over me!</li>
+        <li id="mouseLeaveMe">Mouseleave me!</li>
+        <li><input type="text" value="Focus on me!" id="focusOnMe"></li>
+        <li><input type="text" value="Keydown on me!" id="keydownOnMe">
+            <span style="display: none;" id="hiddenSpan">hehe I was hidden</span></li>
+        <li id="slidetoggle">Here's another random effect for good measure</li>
+    </ul>
+</div>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="code.js"></script>
+<script>
+    function simpleEffect(){
+        $('#slidetoggle').slideToggle();
+        window.setTimeout(simpleEffect(), 3000);
+    }
+
+    $(document).ready(function(){
+       $('#thisDiv').click(function(){
+           // Time to change 5 of the css values!
+           $(this).css('background-color', 'red')
+                   .css('color', 'white')
+                   .css('border', "1px solid black")
+                   .css('font-size', "23px")
+                   .css('opacity',.4);
+           $('#explainDiv').text('Looky! It changed! We changed the background-color, color, border, font-size, and opacity');
+
+       });
+
+        $('#hoverOverMe').hover(function(){
+            $( this ).animate({
+                opacity: 0.4,
+                marginLeft: "0.6in",
+                fontSize: "3em",
+                borderWidth: "10px"
+            }, 800 );
+        });
+
+        $('#mouseLeaveMe').mouseleave(function(){
+            $( this).fadeOut(2000);
+        });
+
+        $('#focusOnMe').focus(function(){
+            $( this).slideUp(2000);
+        });
+
+        $('#keydownOnMe').keydown(function(){
+            $('#hiddenSpan').fadeIn(2000);
+        });
+
+simpleEffect();
+    });
+</script>
+
+</html>
