@@ -12,6 +12,11 @@ var obj1 = new Object();
 obj1.name = "Tom"; // add an attribute!
 obj1.balance = 1000;
 // can also add functions
+//like so:
+obj1.func=function(){
+    return "hi";
+};
+
 
 console.log(JSON.stringify(obj1));
 
@@ -21,6 +26,7 @@ var obj2 = {name : "Tom", balance : 1000};
 console.log(JSON.stringify(obj2));
 
 // Just note that the two ways shown here are really identical.
+    console.log("Two lines above should be identical");
 
 </script>
 </head>

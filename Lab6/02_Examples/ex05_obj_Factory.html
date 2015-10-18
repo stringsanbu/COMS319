@@ -6,6 +6,10 @@
 // Here is another way. One problem of this method is that the
 // instanceof operator does not work.
 // TODO: Understand why this pattern for creating objects does not work.
+//#1. This way of creating an object only constructs it in a certain way, we want a function that can take arguments for a student
+//#2. We can manaully change it, see "Fred" code
+//#3. We can add additional parts as long as we are using JSON stringify
+//#4. So the the problem is if we call instanceof
 
 // -----------------
 // Factory pattern
@@ -19,7 +23,14 @@ function createStudent() {
 
 var obj3 = createStudent();
 console.log(JSON.stringify(obj3));
+var obj4 = createStudent();
+console.log(JSON.stringify(obj4));
 
+  obj4.name="Fred";
+console.log(JSON.stringify(obj4));
+  obj4.grade=5;
+console.log(JSON.stringify(obj4));
+  console.log(obj4 instanceof obj3);//this causes error
 </script>
 </head>
 <body>

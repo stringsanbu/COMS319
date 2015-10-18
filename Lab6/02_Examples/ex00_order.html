@@ -26,23 +26,25 @@
 // TODO: IT IS FUN TO TRY TO MAKE A LIST OF WHAT WILL GET SHOWN ON
 // SCREEN AND IN WHAT ORDER. FIGURE OUT WHAT IS HAPPENING.
 
-console.log(i++," In head element");
+console.log(i++," In head element");//In head element will be printed to console
 
 // We are adding an event listener for the READY event here
 // We will learn (later) other ways to add such listeners
 document.addEventListener('DOMContentLoaded', function () {
-  console.log(i++, " document is now ready", new Date().getTime()); 
+  console.log(i++, "Document is now ready, this should be the second to last log to console (not counting picture errors)", new Date().getTime());
+  //This is printed to console once all DOM content is loaded (this should happen after  Hello 2)
 });
 
 </script>
 </head>
 
-<body onload="test(' document has now been loaded completely!');">
+<body onload="test('Document has now been loaded completely!--This should be the last log to console');">
 
 Hello 1!
 
-<script> 
-console.log(i++, " in script1 in body");
+<script>
+  //test is hoisted from below, is printed to the console last
+console.log(i++, " in script1 in body"); //in script1 in body is printed to the console
 
 // This gets hoisted
 function test(s) {
@@ -54,21 +56,37 @@ function test(s) {
 Hello 2!
 
 <script> 
-  console.log (i++, " in script2 in body");
+  console.log (i++, " in script2 in body"); //in script2 in body is printed to the console
+  //in test0.js will be printed to the console next
 </script>
 
-<script src="js/test0.js"> </script-->
+<script src="js/test0.js">//modified script tag so there are no errors </script>
 
 Hello 3!
 
 <!-- put some pictures test1.jpg etc that are several MBs -->
-<!-- that should make onload event fire much later than ready event -->
+<!-- that should make onload event fire much later than ready event
 <img src="test1.jpg">
 <img src="test2.jpg">
 <img src="test3.jpg">
 <img src="test4.jpg">
+-->
+<script>
+  console.log (i++, "This should be the third to last log (not counting picture errors)");
+</script>
 
-<script src="js/test0.js"> </script>
+<!-- removed second call to test0.js-->
+
+<br><br>
+The following is printed to console:<br>
+1  in test0.js  'time'</time><br>
+2  In head element<br>
+3  in script1 in body<br>
+4  in script2 in body<br>
+5  in test0.js  'time'<br>
+6 This should be the third to last log (not counting picture errors)<br>
+7 Document is now ready, this should be the second to last log to console (not counting picture errors) 'time'<br>
+8 Document has now been loaded completely!--This should be the last log to console 'time'<br>
 
 </body>
 </html>

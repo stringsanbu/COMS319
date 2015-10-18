@@ -3,33 +3,30 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 
+</script>
+
+<!--
+
+// REMAINING information about functions
+
+// 1. self-invoke a function IIFE -->
 <script>
-<!-- I will talk about call/bind/apply later in class -->
-<!-- we skipped that! -->
-
-// REMAINING information about functions ---
-
-// 1. self-invoke a function IIFE
 (function (x, y) {console.log ("self-invoke: " + (x+y));})(100,200);
+<!-- in the above example, we had an anonymous function being called
+ right away. x gets 100 and y gets 200.-->
 
-// in the above example, we had an anonymous function being called 
-// right away. x gets 100 and y gets 200. 
+<!--
+ -----------------------------------------
+Understanding "this" and apply,call,and bind
+ -----------------------------------------
+ Functions are objects. They have a Call, Apply, and Bind method
+ You can ask it to use a "this" TEMPORARILY using Call and Apply.
+ Only difference is in how they expect arguments
+ Call  uses commas to separate arguments
+ Apply just uses an array
 
-
-
-
-// -----------------------------------------
-// Understanding "this" and apply,call,and bind
-// -----------------------------------------
-// Functions are objects. They have a Call, Apply, and Bind method
-// You can ask it to use a "this" TEMPORARILY using Call and Apply. 
-// Only difference is in how they expect arguments
-// Call  uses commas to separate arguments
-// Apply just uses an array
-
-// BIND binds a function to an object and returns the bound function.
-// When the "bound" function is used, it always uses that object as this.
-
+ BIND binds a function to an object and returns the bound function.
+ When the "bound" function is used, it always uses that object as this.-->
 $(document).ready(function() {
 
 // This is first object
@@ -49,7 +46,7 @@ var user = {
         console.log(s+"error reading data:" + this + "-" + err);
       }
     }
-} // end of user
+}; // end of user
 
 
 // This is second object
@@ -60,8 +57,19 @@ var user2 = {
     ]
 };
 
+    // Our own object
+    var user3 = {
+        data:[
+            {name:"Fred", age:113, randNum:10},
+            {name:"Linda", age:059}
+        ]
+    };
+
 // 2. Note that the "this" is user here.
 user.clickHandler("directly: calling user ");
+
+
+user3.clickHandler("Thisis the new TODO object")
 
 // 3. See how call and apply are used.
 // The only difference between call and apply is in how the arguments are
@@ -71,6 +79,8 @@ user.clickHandler("directly: calling user ");
 user.clickHandler.call(user2, "call: user2 "); 
 user.clickHandler.apply(user2,["apply: user2 "]);
 
+    user.clickHandler.call(user3, "Here we call user3");
+
 
 // 4. Here is an example of how bind is used.
 // The foo2 is a function that has user2 bound permanently to 
@@ -78,6 +88,9 @@ user.clickHandler.apply(user2,["apply: user2 "]);
 // Binding is often useful when assigning functions to event handlers.
 var foo2 = user.clickHandler.bind(user2);
 foo2("using bind: calling user's clickHandler but expecting user2 ");
+
+    foo2=user.clickHandler(user3);
+    foo2("using bind: calling user's clickHandler but expecting user2 ");
 
 
 // In this case, even though call is trying to set this for foo2 call to
@@ -92,8 +105,10 @@ foo2.call(user, "using bind: calling user but expecting user2 ");
 // clicking this will just give an error
 $("#p1").click((function (s) { return function () {
 user.clickHandler(s);};})("clicked p1 "));
-// TRY IT OUT BY CLICKING P1!
 
+
+    $("#p2").click((function (s) { return function () {
+        user3.clickHandler(s);};})("clicked p2 "));
 // 6. If we really wanted to have "user" as the this for the handler,
 // we can create a new function using bind that PERMANENTLY binds the 
 // handler code to the this object.

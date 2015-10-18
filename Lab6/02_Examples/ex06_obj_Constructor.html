@@ -10,16 +10,16 @@
 // -----------------
 
 function Student () { // called a constructor
-  this.name = "Tom";
-  this.foo = function() {console.log("hi"); };
+  this.name = "Tom";//uses THIS
+  this.foo = function() {console.log("hi"); };//uses THIS
 };
 
 var stu1 = new Student(); // create a new object, assign this, do, return
 stu1.name = "Sally";
 
 console.log(JSON.stringify(stu1));
-console.log(stu1 instanceof Student);
-console.log(stu1 instanceof Object);
+console.log(stu1 instanceof Student);//no error and correct result
+console.log(stu1 instanceof Object);//no error and correct result
 
 
 
@@ -30,14 +30,17 @@ console.log(JSON.stringify(stu2));
 // ONE PROBLEM: the function is duplicated!
 console.log(stu1.foo === stu2.foo); // this is FALSE (i.e. methods are duplicated)
 
-// TODO: Notice that functions are DUPLICATED in every instance using
+// Notice that functions are DUPLICATED in every instance using
 // this pattern! That's why they are not equal.
+
+
 
 // what happens if we do the following?
 // Explain what is "this" in the below invocation.
 Student(); // call the function Student; what is "this"?
-// TODO: uncomment the below!
-//console.log(this.name);
+//this will still be Tom because it is the string of this object not the JSON
+
+console.log(this.name);
 
 // Hopefully, now you understand why the "new" operator is needed!
 // It creates an object and that object becomes the this for the
@@ -48,6 +51,16 @@ Student(); // call the function Student; what is "this"?
 // Array, Function, RegExp,
 // Date
 // TODO: play with these objects and use their methods
+function Course() {
+  this.className = "COMS319";
+  this.labs = ['lab1',"lab2","lab3","lab4","lab5","port1","lab6"];
+  this.classSize=150;
+  this.grades = function() {return "Grades have not been reported"};
+  this.midtermDone=true;
+};
+
+  var UI=new Course();
+console.log(JSON.stringify(UI));
 
 </script>
 </head>

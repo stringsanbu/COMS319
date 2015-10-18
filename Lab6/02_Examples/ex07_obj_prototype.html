@@ -28,12 +28,16 @@ console.log("p2's prototype is " + JSON.stringify(Object.getPrototypeOf(p2)));
 // Problem: references point to same place
 p1.friends.push("Jerry");
 console.log("p2's friends are: " + p2.friends + "\nshould it have Jerry?"); // show p2's friends
+console.log("It prints Jerry, but it should not")
 
-// TODO: Note that the methods are not duplicated. That's good.
-// TODO: Are the constructors same? prototypes?
-// TODO: Find out what's the problem with the prototype pattern?
-// The problem is that references (such as friends array) are same.
-// Hence, if one friend pushes - it gets pushed for all Persons.
+// The methods are not duplicated
+
+// Are the constructors same? prototypes?
+//Constructors are the same, prototypes are not, as we see above Jerry shouldn't be p2's friend when pushed to p1.
+
+// Find out what's the problem with the prototype pattern?
+//We are using references not pointers (to put it in C/C++ terms)
+
 
 
 </script>

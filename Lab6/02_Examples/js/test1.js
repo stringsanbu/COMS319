@@ -7,6 +7,12 @@ $(document).ready(function() {
   });
 });
 
+$(document).ready(function() {
+    $('#test2').click(function(){
+        createTable(4, 4);
+    });
+});
+
 /*
   createTable formal arguments: 
       n is the number of rows    m is the number of columns 
@@ -22,7 +28,7 @@ $(document).ready(function() {
   </table>
  */
 function createTable(n, m) {
-    mytable = $("<table border='2'></table>"); // creates DOM elements
+    mytable = $("<table border='4'></table>"); // creates DOM elements -- changed border to 4
     mytablebody = $('<tbody></tbody>'); 
 
     for(row = 0; row < n; row++) {

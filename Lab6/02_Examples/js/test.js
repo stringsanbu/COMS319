@@ -25,7 +25,7 @@ $('#clickb').click(function(){
 
 $('#updatepreb').click(function(){
     updatepre();
-    //myupdatepre(0);    // uncomment myupdatepre and review the changes
+    myupdatepre(0);    // uncomment myupdatepre and review the changes
 });
 
 /*************************************************
@@ -34,11 +34,12 @@ $('#updatepreb').click(function(){
 
 function updatepre() {
     $('pre').css('background', 'red');         // $('pre') returns an array of html elements encapsulated in jQuery
-    // document.getElementsByTagName('pre');   // directly using javascript 
+     document.getElementsByTagName('pre');   // directly using javascript
 }
 
 function myupdatepre(i) {
     var x = $('pre').get(i);
+    //Below line adds a highlight to the DOM
     $(x).css('background', 'lightblue');       // using encapsulation in jQuery
     // x.style.backgroundColor = "lightblue";  // directly using Javascript object accessibility
 }
@@ -56,13 +57,14 @@ $('.myclass').mouseout(function(){
 });
 
 /*** hover is a combination of mouseover and mouseout actions
-     it takes two function as handlers for both the actions 
+     it takes two function as handlers for both the actions  */
+//So this allows us to change something on hover and when we end hover
 $('.myclass').hover(function(){
     $(this).css({'color': 'red', 'font-weight': 'bold'});
 }, 
 		   function(){
     $(this).css({'color': 'black', 'font-weight': 'normal'});
 });
-*/
+
 
 });
