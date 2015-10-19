@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="booksLibrary.js"></script>
+    <script>
+        window.Library = new Library();
+        $(document).ready(function () {
+            $('#library_table').on('click', 'td', function(){
+                var name = $(this).text();
+                var count = $(this).data('count');
+                var author = $(this).data('author');
+                var fiction = $(this).data('fiction');
+                fiction = fiction ? "Fiction" : "Non-Fiction";
+                var appendString = "<p><b>Name: </b>"+name+"<br>";
+                appendString += "<b>Author: </b>"+author+"<br>";
+                appendString += "<b>Count: </b>"+count+"<br>";
+                appendString += "<b>"+fiction+"</b><br></p>";
+                $('#book_info').html(appendString);
+            });
+
+
+
+
+
+            // We're going to fill the table up. Let's go!
+            var lib = window.Library;
+
+            // First, let's add the headers
+            var shelves = lib.getShelves();
+            var actualShelves = lib.shelves;
+            actualShelves.forEach(function (shelf) {
+                $('#header_row').append("<th>" + shelf.name + "</th>");
+
+            });
+
+            //Let's get the books ready now
+            var booksAssociative = [];
+
+            var books = lib.books;
+            for (var b in books) {
+                if (booksAssociative[books[b].name] == undefined){
+                    booksAssociative[books[b].name] = {count: 1, author: books[b].author, fiction: books[b].fiction};
+                }
+                else booksAssociative[books[b].name].count++;
+            }
+            var j = 0;
+            for(var i = 0; i < lib.SHELF_SIZE_CONSTANT; i++){
+                var appendString = "<tr>"
+                for(var shelf in shelves){
+                    appendString += "<td ";
+                    if(actualShelves[shelf].books[j] != undefined){
+                        appendString += 'data-count="'+booksAssociative[books[j].name].count+'"';
+                        appendString += 'data-author="'+actualShelves[shelf].books[j].author+'"';
+                        appendString += 'data-fiction="'+actualShelves[shelf].books[j].fiction+'"';
+                        appendString += '>'
+                        appendString += actualShelves[shelf].books[j].name;
+                    }
+                    else appendString += '>';
+                    appendString += "</td>";
+                }
+                j++;
+                appendString += "</tr>";
+                $('#library_table').append(appendString);
+            }
+
+        });
+    </script>
+</head>
+<body>
+
+<table id="library_table" border="1">
+<tr id="header_row"></tr>
+
+</table>
+<div id="book_info">
+
+</div>
+
+</body>
+
+
+</html>
