@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style type="text/css">
+        form.login {
+            border: 5px groove;
+            margin: 20%;
+        }
+    </style>
+</head>
+<body>
+
+
+    <form>
+        <fieldset><p>Enter a username and password</p>
+        <legend>Login</legend>Username:
+        <input type="text" class="input"  name="username" /></br></br>
+        Password:&nbsp;&nbsp;<input type="password" class="input"  name="password" /></br></br>
+        <input type="submit" value="Login" id="submit"/>
+        </fieldset>
+    </form>
+
+<script>
+$(document).ready(function(){
+    $('form').submit(function (e) {
+       console.log("hi");
+        $.ajax({
+            type: 'post',
+            url: 'checkLogin.php',
+            data: $('#form').serialize(),
+            success: function (html) {
+                if (html == success) {
+                    window.location = "viewPosts.php";
+                }
+                else {
+                    $("form").html("Wrong username or password");
+                }
+            }
+        });
+
+    });
+});
+
+</script>
+
+</body>
+</html>
