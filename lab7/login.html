@@ -10,8 +10,9 @@
         }
     </style>
 </head>
-<body>
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<body>
 
     <form>
         <fieldset><p>Enter a username and password</p>
@@ -23,15 +24,19 @@
     </form>
 
 <script>
+
 $(document).ready(function(){
     $('form').submit(function (e) {
-       console.log("hi");
+        e.preventDefault();
+        var data = $('form').serialize();
+        data = data.replace(/[\n\r]/g, '');
+        console.log("hi");
         $.ajax({
             type: 'post',
             url: 'checkLogin.php',
-            data: $('#form').serialize(),
+            data: data,
             success: function (html) {
-                if (html == success) {
+                if (html == 'success') {
                     window.location = "viewPosts.php";
                 }
                 else {
