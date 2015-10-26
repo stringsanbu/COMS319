@@ -20,6 +20,7 @@ foreach ($userlist as $individual) {
 }
 
 if($success) {
+    $_SESSION['username'] = $user;
     echo "success";
 }
 

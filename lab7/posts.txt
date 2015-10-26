@@ -1,4 +1,1 @@
-Bug
-Dog
-Cat fish
-fish
+[{"uniqueId":"20151026123841","content":"weeeeeee","author":"tigges"},{"uniqueId":"20151026123427","content":"wutwut","author":"tigges"},{"uniqueId":"20151026122520","content":"helo","author":"tigges"},{"uniqueId":"20141026110244","content":"testPost","author":"testAuthor"},{"uniqueId":"20131026110244","content":"testPost","author":"testAuthor"},{"uniqueId":"20121026110244","content":"testPost","author":"testAuthor"},{"uniqueId":"20111026110244","content":"testPost","author":"testAuthor"}]
