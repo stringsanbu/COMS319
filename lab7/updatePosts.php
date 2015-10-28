@@ -8,6 +8,7 @@ session_start();
 $dateTime = new DateTime();
 $author = $_SESSION['username'];
 $value = $_POST['value'];
+$title = $_POST['title'];
 $action = null;
 $uid = null;
 
@@ -17,7 +18,7 @@ if (isset($_POST['uid'])) {
     $uid = $_POST['uid'];
 } else {
     $action = "new";
-    $uid = $dateTime->format('YmdHis');
+    $uid = $dateTime->format('Y-m-d-H-i-s');
 }
 
 $posts = file_get_contents('posts.txt', true);
@@ -30,6 +31,7 @@ else if ($action == "new") {
     $post->uniqueId = $uid;
     $post->content = $value;
     $post->author = $author;
+    $post->title = $title;
     array_unshift($posts, $post);
 }
 else {
@@ -41,6 +43,8 @@ else {
     echo "index: $i";
     var_dump($posts[$i]);
     $posts[$i]->content = $value;
+    $posts[$i]->title = $title;
+
 }
 
 

@@ -20,10 +20,11 @@ $rows = array();
 foreach ($posts as $post) {
     $row = <<<ROW
         <tr>
+            <td>{$post->title}</td>
             <td>{$post->content}</td>
             <td>{$post->author}</td>
             <td>
-                <button type="button" class='edit' data-uid='{$post->uniqueId}' data-current='{$post->content}' data-author='{$post->author}'>Edit</button>
+                <button type="button" class='edit' data-uid='{$post->uniqueId}' data-current='{$post->content}' data-author='{$post->author}' data-title='{$post->title}'>Edit</button>
             </td>
         </tr>
 ROW;
@@ -47,6 +48,7 @@ ROW;
 <div id="table_div">
 <table id="postsTable" border="1">
     <tr>
+        <th>Title</th>
         <th>Post</th>
         <th>Author</th>
         <th>Edit</th>
@@ -74,6 +76,7 @@ echo "<br><a class='new_post' href='#'>New Post</a><br>
         $('body').on('click', '.edit', function () {
             var id = $(this).data('uid'),
                 value = $(this).data('current'),
+                title = $(this).data('title'),
                 postAuthor = $(this).data('author');
             if (author != postAuthor) {
                 alert("You are not the author of this post and cannot edit.");
@@ -88,6 +91,7 @@ echo "<br><a class='new_post' href='#'>New Post</a><br>
                 type: 'post',
                 url: 'updatePosts.php',
                 data: {
+                    title: title,
                     uid: id,
                     value: nextValue
                 },
@@ -99,8 +103,10 @@ echo "<br><a class='new_post' href='#'>New Post</a><br>
         });
 
         $('.new_post').click(function () {
-            var value = prompt("New Post", value);
-            if (value == null) {
+            var title = prompt("New Post Title", value);
+            var value = prompt("New Post Content", value);
+            if (value == null || title==null) {
+                // TODO: Maybe display an error instead?
                 return;
             }
             // OK, looks good let's send it in
@@ -108,6 +114,7 @@ echo "<br><a class='new_post' href='#'>New Post</a><br>
                 type: 'post',
                 url: 'updatePosts.php',
                 data: {
+                    title: title,
                     value: value
                 },
                 success: function (html) {
