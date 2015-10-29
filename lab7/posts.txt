@@ -1,1 +1,1 @@
-[{"uniqueId":"2015-10-26-12-38-41","content":"i","author":"tigges","title":"TestPost1"},{"uniqueId":"2015-10-26-12-25-20","content":"helo","author":"tigges","title":"TestPost2"}]
+[{"uniqueId":"2015-10-26-12-38-41","content":"helloworld","author":"tigges","title":"TestPost1","likes":2},{"uniqueId":"2015-10-26-12-25-20","content":"helo","author":"tigges","title":"TestPost2","likes":2}]

@@ -26,6 +26,10 @@ foreach ($posts as $post) {
             <td>
                 <button type="button" class='edit' data-uid='{$post->uniqueId}' data-current='{$post->content}' data-author='{$post->author}' data-title='{$post->title}'>Edit</button>
             </td>
+            <td>{$post->likes}</td>
+            <td>
+                <button type="button" class='like' data-uid='{$post->uniqueId}'>Like</button>
+            </td>
         </tr>
 ROW;
     $rows[] = $row;
@@ -52,6 +56,8 @@ ROW;
         <th>Post</th>
         <th>Author</th>
         <th>Edit</th>
+        <th>Likes</th>
+        <th>Like</th>
     </tr>
     <?php
     foreach ($rows as $row) echo $row;
@@ -116,6 +122,22 @@ echo "<br><a class='new_post' href='#'>New Post</a><br>
                 data: {
                     title: title,
                     value: value
+                },
+                success: function (html) {
+                    $('#table_div').load('viewPosts.php #postsTable');
+                }
+            });
+        });
+
+        $('body').on('click', '.like', function () {
+            var uid = $(this).data('uid');
+
+            $.ajax({
+                type: 'post',
+                url: 'updatePosts.php',
+                data: {
+                    uid: uid,
+                    like: true
                 },
                 success: function (html) {
                     console.log(html);
