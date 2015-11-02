@@ -5,7 +5,7 @@
  */
 session_start();
 
-$dateTime = new DateTime();
+$dateTime = new DateTime('America/Chicago');
 $author = $_SESSION['username'];
 $value = $_POST['value'];
 $title = $_POST['title'];
