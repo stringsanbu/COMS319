@@ -151,7 +151,7 @@ EMAILOUT:  LOCALPART*'@'DOMAIN*
 	};
 	
 fragment DOMAIN: [a-zA-Z0-9.-];
-fragment LOCALPART: [a-zA-Z0-9_~!$')(*+,;=:];
+fragment LOCALPART: [a-zA-Z0-9_~!$')(*+,;=:][a-zA-Z0-9_~!$')(*+,;=:.][a-zA-Z0-9_~!$')(*+,;=:];
 
 fragment DAY: [0-2][0-9] | '30' | '31' ;
 fragment MONTH: [0][1-9] | '1'[0-2];
